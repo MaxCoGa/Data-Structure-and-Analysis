@@ -1,38 +1,46 @@
-package lecture_2;
+//package lecture_4;
+
 /*
- * sorted array of integers
+ * unsorted array of integers
  *
  * CSI2510 Algortihmes et Structures de Donnees
  * www.uottawa.ca
  *
  * Robert Laganiere, 2017
  *
-*/
-public class SortedArray {
+*/ 
+public class SimpleArray {
 
   private int[] data; 
   private int size = 0;
 
   // construct with fixed capacity
-  public SortedArray(int capacity) {
+  public SimpleArray(int capacity) {
        
     data = new int[capacity]; 
   }
 
-  // add a new integer
+  // add a new integer (most efficient)
   public boolean add(int value) {
 
     if (size == data.length) 
 	 return false;
+	  
+    data[size++]= value;
+	
+    return true;
+  }
 
-	int i=0;
-	while (i<size && data[i]<=value)
-		i++;
-		  
-	for (int j= size++; j>i; j--)	
-		data[j]= data[j-1];
-		
-    data[i]= value;
+  // add a new integer (least efficient)
+  public boolean addOppositeSide(int value) {
+
+    if (size == data.length) 
+	 return false;
+	 
+	for (int i= size++; i>0; i--)
+	  data[i]= data[i-1];	
+	  
+    data[0]= value;
 	
     return true;
   }
@@ -40,40 +48,28 @@ public class SortedArray {
   // search if a given integer is in the array
   public int search(int value) {
 
-    int inf=0, sup= size-1;
-	int mid= (inf+sup)/2;
-	
-	while (data[mid]!=value && inf<sup) {
-	
-		if (data[mid]<value) {
-			inf= mid+1;
-		} else {
-			sup= mid-1;
-		}
-		
-		mid= (inf+sup)/2;
-	}
-	
-	if (data[mid]==value)
-	  return mid;
-	else
+    int i=0;
+	while (i<size && data[i]!=value) 
+	  i++;
+	  
+	if (i==size) { 
 	  return -1;
+	} else {
+	  return i;
+    }	
   }
 
   // remove a given integer (first occurrence of)
   public boolean searchAndRemove(int value) {
 
     int i= search(value);
-	
-	if (i<0) {
+	  
+	if (i<0) { 
 	  return false;
 	  
 	} else {
 
-	  size--;
-	  for (int j= i; j<size; j++)
-		data[j]= data[j+1];
-		
+	  data[i]= data[--size];
 	  return true;
     }	
   }
@@ -83,15 +79,12 @@ public class SortedArray {
 
     if (index<0 || index>=size)
 	  return false;
-	
-	size--;
-    for (int i=index; i<size; i++)
-	  data[i]= data[i+1];
 	  
+	data[index]= data[--size];
 	return true;
   }
-  
-   // get the element at a given index
+    
+  // get the element at a given index
   public int elementAt(int index) {
   
 	return data[index];
@@ -102,7 +95,6 @@ public class SortedArray {
   
 	return size;
   }
-
     
   // string representation
   public String toString() {
@@ -118,7 +110,7 @@ public class SortedArray {
   
   public static void main(String[] args) {
   
-    SortedArray tab= new SortedArray(10);
+    SimpleArray tab= new SimpleArray(10);
 	
 	tab.add(34);
 	tab.add(93);
@@ -133,21 +125,10 @@ public class SortedArray {
 	tab.searchAndRemove(23);
 	System.out.println("C:" + tab);
 	
-	System.out.println("D1:" + tab.search(67));
-	System.out.println("D2:" + tab.search(93));
-	System.out.println("D3:" + tab.search(23));
-	System.out.println("D4:" + tab.search(99));
-	System.out.println("D5:" + tab.search(9));
-	System.out.println("D6:" + tab.search(59));
+	System.out.println("D:" + tab.search(67));
+	System.out.println("E:" + tab.search(99));
 	
-	tab.add(58);
-	System.out.println("E:" + tab);
-	
-	System.out.println("F1:" + tab.search(67));
-	System.out.println("F2:" + tab.search(93));
-	System.out.println("F3:" + tab.search(23));
-	System.out.println("F4:" + tab.search(99));
-	System.out.println("F5:" + tab.search(9));
-	System.out.println("F6:" + tab.search(59));
+	tab.addOppositeSide(44);
+	System.out.println("F:" + tab);
   }
 }

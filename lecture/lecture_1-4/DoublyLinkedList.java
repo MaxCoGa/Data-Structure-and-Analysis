@@ -1,6 +1,7 @@
-package lecture_2;
+//package lecture_4;
 /*
- * singly linked list of integers
+ * doubly linked list of integers 
+ * (with dummy element)
  *
  * CSI2510 Algortihmes et Structures de Donnees
  * www.uottawa.ca
@@ -8,27 +9,29 @@ package lecture_2;
  * Robert Laganiere, 2017
  *
 */
-public class SimpleLinkedList {
+public class DoublyLinkedList {
 
   private class Node {
   
     public int element;
+	public Node prev;
 	public Node next;
 	
-	public Node(int v, Node p) { 
+	public Node(int v, Node p, Node n) { 
 	  element= v;
-	  next= p;
-	}
+	  prev= p;
+	  next= n;
+	}	
   }
  
   private Node head; 
   private int size;
-
  
   // construct empty list
-  public SimpleLinkedList() {
+  public DoublyLinkedList() {
        
-	head= null;
+	head= new Node(-1, null, null);
+	head.prev= head.next= head; 
 	size= 0;
   }
   
@@ -41,8 +44,9 @@ public class SimpleLinkedList {
   // add a new integer (most efficient)
   public boolean add(int value) {
 
-    Node newNode= new Node(value, head);
-	head= newNode;
+    Node newNode= new Node(value, head, head.next);
+	head.next.prev= newNode;
+	head.next= newNode;
 		
 	size++;
 	
@@ -52,23 +56,11 @@ public class SimpleLinkedList {
    // add a new integer (least efficient)
   public boolean addOppositeSide(int value) {
  
-    Node newNode= new Node(value, null);
-	
-	if (head == null) {
-	  head= newNode;
-	
-	} else {
-	
-	  Node n= head;
-	  
-	  while (n.next!=null) {
-	    n= n.next; 
-	  }
-	  
-	  n.next= newNode;
-	}
-	
-	size++; 
+    Node newNode= new Node(value, head.prev, head);
+	head.prev.next= newNode;
+	head.prev= newNode;
+		
+	size++;
 	
     return true;
   }
@@ -76,12 +68,12 @@ public class SimpleLinkedList {
   // search if a given integer is in the array
   public boolean search(int value) {
 
-    Node n= head;
+    Node n= head.next;
 	
-    while (n!=null && n.element!=value)
+    while (n!=head && n.element!=value)
 	  n= n.next;
 	  
-	if (n==null)
+	if (n==head)
 	  return false;
 	else 
 	  return true;
@@ -90,24 +82,16 @@ public class SimpleLinkedList {
   // remove a given integer (first occurrence of)
   public boolean searchAndRemove(int value) {
 
-    if (head.element == value) {
-	  head= head.next;
-	  size--;
-	  return true;  
-	}
-	
 	Node n= head.next;
-	Node p= head;
 	
-    while (n!=null && n.element!=value) {
-	  p= n;
+    while (n!=head && n.element!=value) 
 	  n= n.next;
-	}
+	
 
-    if (n!=null) {
+    if (n!=head) {
 
-	  p.next= n.next;
-	  n.next= null;
+	  n.prev.next= n.next;
+	  n.next.prev= n.prev;
 	  size--;
       return true;
 	  
@@ -125,17 +109,12 @@ public class SimpleLinkedList {
 	
 	size--;
 	
-	if (index==0) {
-	  head= head.next;
-	  
-	} else {
-	
-	  Node n= head;
-      for (int i=1; i<index; i++)
-	    n= n.next;
+	Node n= head.next;
+    for (int i=0; i<index; i++)
+	  n= n.next;
 
-	  n.next= n.next.next;
-	}
+	n.prev.next= n.next;
+	n.next.prev= n.prev;
 	  
 	return true;
   }
@@ -143,15 +122,15 @@ public class SimpleLinkedList {
   // return the first element of the list
   public int getFirst() {
   
-	return head.element;
+	return head.next.element;
   }
-  
+ 
   // string representation
   public String toString() {
   
     StringBuffer s = new StringBuffer("");
   
-    for (Node node= head; node!= null; node= node.next) {
+    for (Node node= head.next; node!= head; node= node.next) {
 	  s.append("["+node.element+"]");
 	}
 	
@@ -162,7 +141,7 @@ public class SimpleLinkedList {
   
   public static void main(String[] args) {
   
-    SimpleLinkedList list= new SimpleLinkedList();
+    DoublyLinkedList list= new DoublyLinkedList();
 	
 	list.add(34);
 	list.add(93);

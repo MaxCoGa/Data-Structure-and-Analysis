@@ -1,7 +1,6 @@
-package lecture_1;
-
+//package lecture_4;
 /*
- * unsorted array of integers
+ * unsorted array of integers with capacity that automatically grows
  *
  * CSI2510 Algortihmes et Structures de Donnees
  * www.uottawa.ca
@@ -9,28 +8,39 @@ package lecture_1;
  * Robert Laganiere, 2017
  *
 */ 
-public class SimpleArray {
+public class GrowableArray {
 
   private int[] data; 
   private int size = 0;
 
-  // construct with fixed capacity
-  public SimpleArray(int capacity) {
+  // construct with initial capacity
+  public GrowableArray(int capacity) {
        
     data = new int[capacity]; 
+  }
+  
+  // double the capacity of the array
+  private void grow() {
+  
+	int[] tmp= new int[2*data.length];
+	
+	for (int i=0; i< size; i++)
+		tmp[i]= data[i];
+		
+	data= tmp;
   }
 
   // add a new integer (most efficient)
   public boolean add(int value) {
 
     if (size == data.length) 
-	 return false;
+	 grow();
 	  
     data[size++]= value;
 	
     return true;
   }
-
+  
   // add a new integer (least efficient)
   public boolean addOppositeSide(int value) {
 
@@ -44,7 +54,7 @@ public class SimpleArray {
 	
     return true;
   }
-
+  
   // search if a given integer is in the array
   public int search(int value) {
 
@@ -64,7 +74,7 @@ public class SimpleArray {
 
     int i= search(value);
 	  
-	if (i<0) { 
+	if (i==size) { 
 	  return false;
 	  
 	} else {
@@ -84,6 +94,20 @@ public class SimpleArray {
 	return true;
   }
     
+  // string representation
+  public String toString() {
+  
+    StringBuffer s = new StringBuffer("");
+  
+    for (int i=0; i<size; i++) {
+	  s.append("["+data[i]+"]");
+	}
+	
+	s.append("("+data.length+")");
+	
+	return s.toString();
+  }
+  
   // get the element at a given index
   public int elementAt(int index) {
   
@@ -95,29 +119,21 @@ public class SimpleArray {
   
 	return size;
   }
-    
-  // string representation
-  public String toString() {
-  
-    StringBuffer s = new StringBuffer("");
-  
-    for (int i=0; i<size; i++) {
-	  s.append("["+data[i]+"]");
-	}
-	
-	return s.toString();
-  }
+
   
   public static void main(String[] args) {
   
-    SimpleArray tab= new SimpleArray(10);
+    GrowableArray tab= new GrowableArray(5);
 	
 	tab.add(34);
 	tab.add(93);
 	tab.add(67);
 	tab.add(23);
-	tab.add(51);
 	System.out.println("A:" + tab);
+	
+	tab.add(14);
+	tab.add(73);
+	System.out.println("B:" + tab);
 	
 	tab.removeAt(1);
 	System.out.println("B:" + tab);
