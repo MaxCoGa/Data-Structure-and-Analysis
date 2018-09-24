@@ -1,0 +1,15 @@
+1.Que peut-on dire sur l'exécution de tryStack1 et tryStack2 ?
+Création d'une liste de 50 entiers pairs, ordonnés de façon croissante.
+Inversion de l'ordre de la liste(valeurs décroissantes)
+
+2.Décrire le déroulement de l'appel à tryStack1 et tryStack2.
+Tableau d'etnier de taille 50(arr). Chaque élément i du tableau on y associe la valeur i*2. Après on imprime le tableau arr avec printA puis inverse avec reverse et reimprime.
+
+3.Quels sont les différences d'implémentation entre tryStack1 et tryStack2 ?
+Les deux gère une pile, mais...
+trySlack1: utilise un tableau
+trySlack2: utlise une liste chaîné(simple
+
+4.Qu'a t'on voulu mettre en avant ?
+L'objet orienté utilisé en Java, permet de changer en une ligne d ecode l'impémentation d'une liste sans modifier le reste programme. Aussi nous permettre de nous montrer comment mettre en place de différente façon une structure de pile.
+Java possède sa propre destion de piles->Stack.
