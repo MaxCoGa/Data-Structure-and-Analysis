@@ -5,7 +5,7 @@
  * 
  * Transaction.java
  * 
- * Maxime Cote-Gane(8851539)
+ * Maxime Cote-Gagne(8851539)
  */
 
 public class Transaction{

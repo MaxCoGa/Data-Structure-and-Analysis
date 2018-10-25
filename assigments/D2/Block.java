@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
  * 
  * Block.java
  * 
- * Maxime Cote-Gane(8851539)
+ * Maxime Cote-Gagne(8851539)
  */
 public class Block{
   private int index;                // the index of the block in the list
