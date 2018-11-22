@@ -1,0 +1,14 @@
+Comment sont gérés les sommets (vertices) ?
+	Les sommets sont stockés dans une liste.
+	
+Comment sont gérés les arêtes (edges)a ?
+	Les arêtes sont stockés dans une liste.
+
+Comment se déplacer le long des arêtes à partir d'un sommet ?
+	public Vertex <V>opposite( Vertex <V>v, Edge <E>e );
+		nous permet( à partir d'une arête et d'un sommet donnés) de recupérer le sommet opposé sur l'arête.
+		
+	public Iterable <Edge <E>>outgoingEdges( Vertex <V>v );
+		nous permet de récupérer la liste des arêtes qui partent d'un sommet donné.
+
+		Jumelage des deux = parcours en profondeur du graphe.
